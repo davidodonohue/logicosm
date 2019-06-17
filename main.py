@@ -225,10 +225,14 @@ def printHistory(days):
         
 def read_prizes():
     global prizes
-    file = open(os.path.join(path,"prizes.config"), "r")
-    for line in file:
-        info = line.split(",")
-        prizes.append((info[0],info[1].rstrip()))
+    if not os.path.exists(os.path.join(path,"prizes.config")):
+        file = open(os.path.join(path,"prizes.config"), "w")
+        prizes.append(("No prizes detected, please configure the prizes.config file","Free"))
+    else:
+        file = open(os.path.join(path,"prizes.config"), "r")
+        for line in file:
+            info = line.split(",")
+            prizes.append((info[0],info[1].rstrip()))
 
 def refresh(state, status):
     clear()
